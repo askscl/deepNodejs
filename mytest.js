@@ -1,4 +1,4 @@
-function foo(x){
+/* function foo(x){
     return x;
 }
 
@@ -49,4 +49,102 @@ setTimeout(() => {
         }, 2000);
     },1000);
 },1000);
+
+function ajax(url, cb){
+    //
+}
+//..
+ajax("htpp://some.url.1", function handler(err, contents){
+    if(err){
+        //处理ajax错误
+    }else{
+        //处理contents成功情况
+    }
+});
+
+function ajax(url){
+    return new Promise(function pr(resolve, reject){
+        //建立请求，最终会调用resolve(..)或者reject(..)
+    });
+}
+ajax("http://some.url.1")
+.then(function fulfilled(contents){
+    //处理contents成功情况
+}, function reject(reason){
+    //处理ajax出错原因
+}); */
+
+/* setTimeout(() => {console.log(4);}, 0);
+new Promise((resolve) => {
+    console.log(1);
+    resolve();
+    console.log(2);
+}).then(() => {
+    console.log(5);
+    new Promise((resolve) => {
+        console.log(6);
+        resolve();
+        console.log(7);
+    }).then(() => {
+        console.log(8);
+        setTimeout(() => {console.log(9);},0)
+    });
+});
+console.log(3); */
+
+/* step1()
+.then(
+    step2,
+    step2Failed
+)
+.then(
+    function(msg){
+        return Promise.all([
+            step3a(msg),
+            step3b(msg),
+            step3c(msg)
+        ])
+    }
+)
+.then(step4); */
+
+function p(time){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(new Date());
+        }, time)
+    });
+}
+
+p(1000).then((data) => {
+    console.log(1, data);
+    return p(1000);
+}).then((data) => {
+    console.log(2, data);
+    return p(2000);
+}).then((data) => {
+    console.log(3, data);
+});
+
+
+co(function* delay(){
+    let time1 = yield p(1000);
+    console.log(1, time1);
+    let time2 = yield p(1000);
+    console.log(2, time2);
+    let time3 = yield p(2000);
+    console.log(3, time3);
+})
+
+function co(gen){
+    let it = gen();
+    next();
+    function next(arg){
+        let ret = it.next(arg);
+        if(ret.done) return;
+        ret.value.then((data) => {
+            next(data)
+        })
+    }
+}
 
