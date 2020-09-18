@@ -148,3 +148,22 @@ function co(gen){
     }
 }
 
+(async function(){
+    let time1 = await p(1000);
+    console.log(11, time1);
+
+    let time2 = await p(1000);
+    console.log(22, time2);
+
+    let time3 = await p(2000);
+    console.log(33, time3);
+})()
+
+function* foo(x){
+    let y = x * (yield);
+    return y;
+}
+
+let it = foo(6);
+let res = it.next();
+res = it.next(7);
